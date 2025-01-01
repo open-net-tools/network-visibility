@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<dictionaries>
+    <dictionary>
+        <name>geolite2_country_dict</name>
+        <source>
+            <file>
+                <path>/data/GeoLite2-Country.csv</path>
+                <format>CSVWithNames</format>
+            </file>
+        </source>
+        <lifetime>3600</lifetime>
+        <layout>
+            <ip_trie>
+                <access_to_key_from_attributes>true</access_to_key_from_attributes>
+            </ip_trie>
+        </layout>
+        <structure>
+            <key>
+                <attribute>
+                    <name>range</name>
+                    <type>String</type>
+                </attribute>
+            </key>
+            <attribute>
+                <name>registered_country_iso_code</name>
+                <type>String</type>
+                <null_value></null_value>
+            </attribute>
+            <attribute>
+                <name>registered_country_name_en</name>
+                <type>String</type>
+                <null_value></null_value>
+            </attribute>
+        </structure>
+    </dictionary>
+</dictionaries>

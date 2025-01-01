@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<dictionaries>
+    <dictionary>
+        <name>geolite2_asn_dict</name>
+        <source>
+            <file>
+                <path>/data/GeoLite2-ASN.csv</path>
+                <format>CSVWithNames</format>
+            </file>
+        </source>
+        <lifetime>3600</lifetime>
+        <layout>
+            <ip_trie>
+                <access_to_key_from_attributes>true</access_to_key_from_attributes>
+            </ip_trie>
+        </layout>
+        <structure>
+            <key>
+                <attribute>
+                    <name>range</name>
+                    <type>String</type>
+                </attribute>
+            </key>
+            <attribute>
+                <name>autonomous_system_number</name>
+                <type>UInt32</type>
+                <null_value>0</null_value>
+            </attribute>
+            <attribute>
+                <name>autonomous_system_organization</name>
+                <type>String</type>
+                <null_value></null_value>
+            </attribute>
+        </structure>
+    </dictionary>
+</dictionaries>

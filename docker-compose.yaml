@@ -1,0 +1,27 @@
+version: "3"
+services:
+  grafana:
+    image: grafana/grafana:11.4.0
+    environment:
+      - GF_INSTALL_PLUGINS=grafana-clickhouse-datasource
+    ports:
+      - 3000:3000
+    restart: always
+    volumes:
+      - ./grafana/provisioning/datasources/default.yaml:/etc/grafana/provisioning/datasources/default.yaml
+  db:
+    image: clickhouse/clickhouse-server:24.12-alpine
+    ports:
+      - 8123:8123
+      - 9000:9000
+    volumes:
+      - ./clickhouse/init.sql:/docker-entrypoint-initdb.d/init.sql
+      - ./clickhouse/dictionaries:/etc/clickhouse-server/dictionaries
+      - ./clickhouse/config.d/dictionaries.xml:/etc/clickhouse-server/config.d/dictionaries.xml
+      - ./clickhouse/data:/data
+  collector:
+    build:
+      context: ./collector
+    ports:
+      - 2055:2055/udp
+      - 8080:8080
