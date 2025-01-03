@@ -6,5 +6,9 @@ datasources:
     jsonData:
       defaultDatabase: default
       port: 9000
-      host: db
+      host: clickhouse
       tlsSkipVerify: false
+
+  - name: Prometheus
+    type: prometheus
+    url: http://prometheus:9090

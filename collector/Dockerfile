@@ -12,4 +12,4 @@ RUN git clone https://github.com/open-net-tools/goflow2.git && \
 
 ENTRYPOINT ["/opt/goflow2"]
 
-CMD ["-transport", "clickhouse", "-format", "bin", "-transport.clickhouse.dsn", "clickhouse://db:9000/default", "-loglevel", "debug", "-listen", "netflow://0.0.0.0:2055"]
+CMD ["-transport", "clickhouse", "-format", "bin", "-transport.clickhouse.dsn", "clickhouse://clickhouse:9000/default"]

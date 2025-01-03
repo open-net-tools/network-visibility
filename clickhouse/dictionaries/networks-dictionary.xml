@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<dictionaries>
+    <dictionary>
+        <name>networks_dict</name>
+        <source>
+            <file>
+                <path>/data/networks.csv</path>
+                <format>CSVWithNames</format>
+            </file>
+        </source>
+        <lifetime>3600</lifetime>
+        <layout>
+            <ip_trie>
+                <access_to_key_from_attributes>true</access_to_key_from_attributes>
+            </ip_trie>
+        </layout>
+        <structure>
+            <key>
+                <attribute>
+                    <name>prefix</name>
+                    <type>String</type>
+                </attribute>
+            </key>
+            <attribute>
+                <name>name</name>
+                <type>String</type>
+                <null_value></null_value>
+            </attribute>
+        </structure>
+    </dictionary>
+</dictionaries>

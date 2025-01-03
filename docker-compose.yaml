@@ -1,6 +1,7 @@
 version: "3"
 services:
   grafana:
+    container_name: grafana
     image: grafana/grafana:11.4.0
     environment:
       - GF_INSTALL_PLUGINS=grafana-clickhouse-datasource
@@ -9,19 +10,32 @@ services:
     restart: always
     volumes:
       - ./grafana/provisioning/datasources/default.yaml:/etc/grafana/provisioning/datasources/default.yaml
-  db:
+  clickhouse:
+    container_name: clickhouse
     image: clickhouse/clickhouse-server:24.12-alpine
     ports:
       - 8123:8123
       - 9000:9000
+      - 9363:9363
     volumes:
       - ./clickhouse/init.sql:/docker-entrypoint-initdb.d/init.sql
       - ./clickhouse/dictionaries:/etc/clickhouse-server/dictionaries
       - ./clickhouse/config.d/dictionaries.xml:/etc/clickhouse-server/config.d/dictionaries.xml
+      - ./clickhouse/config.d/config.xml:/etc/clickhouse-server/config.d/config.xml
       - ./clickhouse/data:/data
-  collector:
+  goflow2:
+    container_name: goflow2
     build:
       context: ./collector
+    restart: always
     ports:
       - 2055:2055/udp
       - 8080:8080
+  prometheus:
+    container_name: prometheus
+    image: prom/prometheus:v3.1.0
+    ports:
+      - 9090:9090
+    restart: always
+    volumes:
+      - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml

@@ -1,22 +1,3 @@
-CREATE TABLE IF NOT EXISTS networks
-(
-    prefix String,
-    name String
-)
-ENGINE = MergeTree()
-PRIMARY KEY prefix;
-
-CREATE DICTIONARY IF NOT EXISTS networks_dict
-(
-    key String,
-    prefix String,
-    name String
-)
-PRIMARY KEY key
-SOURCE(CLICKHOUSE(QUERY 'SELECT prefix AS key, prefix, name FROM networks'))
-LAYOUT(IP_TRIE)
-LIFETIME(3600);
-
 CREATE FUNCTION IF NOT EXISTS getPrefix AS (etype, addr) ->
 (
     multiIf(
@@ -138,7 +119,7 @@ ORDER BY time_received;
 
 CREATE MATERIALIZED VIEW IF NOT EXISTS flows_raw_mv TO flows_raw AS
     SELECT
-        toDate(time_received_ns) AS date,
+        toDate(time_received_ns / 1000000000) AS date,
         type,
         toDateTime64(time_received_ns / 1000000000, 9) AS time_received,
         sequence_num,
@@ -170,6 +151,7 @@ CREATE MATERIALIZED VIEW IF NOT EXISTS flows_raw_mv TO flows_raw AS
 
 CREATE VIEW IF NOT EXISTS flows_raw_pretty_view AS
     SELECT
+        transform(type, [0, 1, 2, 3, 4], ['unknown', 'sflow_5', 'netflow_v5', 'netflow_v9', 'ipfix'], toString(type)) AS type,
         time_received,
         time_flow_start,
         time_flow_end,
