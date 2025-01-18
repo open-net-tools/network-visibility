@@ -6,7 +6,7 @@ RUN apt install golang-go -y
 
 RUN apt install git -y
 
-RUN git clone https://github.com/open-net-tools/goflow2.git && \
+RUN git clone https://github.com/meirdev/goflow2.git && \
     cd goflow2 && \
     go build -o /opt/goflow2 cmd/goflow2/main.go
 
